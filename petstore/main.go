@@ -3,6 +3,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
+
+	"github.com/davecgh/go-spew/spew"
 )
 
 // Petstore for Dogs and Cats
@@ -24,23 +27,16 @@ type PetStoreList []*Petstore
 
 func main() {
 	petstorelist := PetStoreList{}
-	petstore := &Petstore{
-		Name:     "Fuzzy's",
-		Location: "New York, 5th and Broadway",
-	}
-	petstore.Dogs = append(petstore.Dogs,
-		&Pet{
-			Name:  "Whiskers",
-			Breed: "Pomeranian",
-		},
-	)
-	petstore.Dogs = append(petstore.Dogs,
-		&Pet{
-			Name: "Trinity",
-		},
-	)
-	petstorelist = append(petstorelist, petstore)
 
-	jsonString, _ := json.MarshalIndent(petstorelist, "", "\t")
-	fmt.Printf("%s", jsonString)
+	jsonBlob, err := ioutil.ReadFile("example2.json")
+	if err != nil {
+		fmt.Printf("Error reading file: %s\n", err)
+	}
+
+	err = json.Unmarshal(jsonBlob, &petstorelist)
+	if err != nil {
+		fmt.Printf("Error decoding json: %s\n", err)
+	}
+
+	spew.Dump(petstorelist)
 }
