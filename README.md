@@ -1,0 +1,1 @@
+Exercises from [API Foundations in Go](https://leanpub.com/api-foundations)
