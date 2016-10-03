@@ -25,8 +25,8 @@ func main() {
 
 	m := mux.NewRouter()
 	hey := m.PathPrefix("/hey").Subrouter()
-	hey.HandleFunc("/{name}", requestHandler)
 	hey.HandleFunc("/{name}/", requestHandler)
+	hey.HandleFunc("/{name}", requestHandler)
 	hey.HandleFunc("/", requestHandler)
 
 	http.Handle("/", m)
